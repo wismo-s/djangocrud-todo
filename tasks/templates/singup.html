@@ -1,7 +1,8 @@
 {% extends "layouts/body.html" %}
 {% block content %}
     <h1>singup</h1>
-    <form action="{% url "singupdone" %}" method="POST">
+    <h2>{{error}}</h2>
+    <form method="POST">
         {% csrf_token %}
         {{form}} 
        <button>enviar</button>
