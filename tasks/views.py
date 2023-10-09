@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.db import IntegrityError
 
 # Create your views here.
@@ -16,7 +16,7 @@ def singup(request):
                 user = User.objects.create(username = request.POST['username'], password = request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('singupdone')
+                return redirect('tasks')
             except IntegrityError:
                 return render(request, 'singup.html', {
                     'form': UserCreationForm,
@@ -32,5 +32,8 @@ def singup(request):
             'form': UserCreationForm
         })
 
-def singupdone(request):
-    return render(request, 'singupdone.html')
+def tasks(request):
+    return render(request, 'tasks.html')
+def singout(request):
+    logout(request)
+    return redirect('singup')
