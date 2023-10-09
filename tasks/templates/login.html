@@ -1,0 +1,9 @@
+{% extends "layouts/body.html" %}
+{% block content %}
+    <form action="{% url "lognin" %}" method="POST">
+        {% csrf_token %}
+        {{form}} 
+        <button>enviar</button>
+        {{error}}
+    </form>
+{% endblock %}
