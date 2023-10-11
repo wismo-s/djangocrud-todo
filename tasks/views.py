@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import TaskForm
 
 # Create your views here.
 
@@ -49,3 +50,22 @@ def lognin(request):
 
         login(request, user)
         return redirect('tasks')
+
+def createTask(request):
+    if request.method == 'GET':
+        return render(request, 'create_taks.html', {
+            'form': TaskForm
+        })
+    else:
+        try:
+            form = TaskForm(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            print(new_task)
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'create_taks.html', {
+                'form': TaskForm,
+                'error': "pase un dato correcto"
+            })

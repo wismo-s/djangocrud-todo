@@ -1,0 +1,10 @@
+{% extends "layouts/body.html" %}
+{% block content %}
+    <h1>crear tareas</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+       <button>enviar</button>
+    </form>
+    {{error}}
+{% endblock %}
