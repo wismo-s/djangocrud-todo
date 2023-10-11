@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -71,3 +71,15 @@ def createTask(request):
                 'form': TaskForm,
                 'error': "pase un dato correcto"
             })
+def tasksdetail(request, task_id):
+    taks = get_object_or_404(Task, pk=task_id, user=request.user)
+    form = TaskForm(instance=taks)
+    if request.method == 'GET':
+        return render(request, 'taks_detail.html', { 'task': taks, 'form': form})
+    else:
+        try:
+            form = TaskForm(request.POST, instance=taks)
+            form.save()
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'taks_detail.html', { 'task': taks, 'form': form, 'error': "datos invalidos"})

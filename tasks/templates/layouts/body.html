@@ -11,10 +11,10 @@
         <nav>
             <ul>
                 <li><a href="{% url "home" %}">HOME</a></li>
-                <li><a href="{% url "tasks" %}">Tasks</a></li>
-                <li><a href="{% url "createTaks" %}">Create taks</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url "logout" %}">logaut</a></li>
+                    <li><a href="{% url "tasks" %}">Tasks</a></li>
+                    <li><a href="{% url "createTaks" %}">Create taks</a></li>
                 {% else %}
                     <li><a href="{% url "singup" %}">SING UP</a></li>
                     <li><a href="{% url "lognin" %}">login</a></li>

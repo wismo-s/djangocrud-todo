@@ -5,9 +5,9 @@
         {% for taks in tasks %}
             <li>
                 {% if taks.important %}
-                    <h1>{{taks.title}}</h1>
+                    <a href="{% url "taksDetail"  taks.id %}"><h1>{{taks.title}}</h1></a>
                 {% else %}
-                    <h3>{{taks.title}}</h3>
+                    <a href="{% url "taksDetail"  taks.id %}"><h3>{{taks.title}}</h3></a>
                 {% endif %}
                 <p>{{taks.description}}</p>
                 <p>{{taks.user}}</p>
