@@ -1,4 +1,18 @@
 {% extends "layouts/body.html" %}
 {% block content %}
     <h1>task</h1>
+    <ul>
+        {% for taks in tasks %}
+            <li>
+                {% if taks.important %}
+                    <h1>{{taks.title}}</h1>
+                {% else %}
+                    <h3>{{taks.title}}</h3>
+                {% endif %}
+                <p>{{taks.description}}</p>
+                <p>{{taks.user}}</p>
+                <p>{{taks.created}}</p>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
