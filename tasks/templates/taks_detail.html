@@ -5,6 +5,16 @@
         {% csrf_token %}
         {{form}}
         <button>enviar</button>
-        {{error}}
+    </form>
+    {{error}}
+
+    <form action="{% url "taksCompleted" task.id %}" method="POST">
+        {% csrf_token %}
+        <button>completar</button>
+    </form>
+
+    <form action="{% url "taksDelete" task.id %}" method="POST">
+        {% csrf_token %}
+        <button>borrar</button>
     </form>
 {% endblock %}

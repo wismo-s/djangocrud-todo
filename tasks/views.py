@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
+from django.utils import timezone
 
 # Create your views here.
 
@@ -83,3 +84,16 @@ def tasksdetail(request, task_id):
             return redirect('tasks')
         except ValueError:
             return render(request, 'taks_detail.html', { 'task': taks, 'form': form, 'error': "datos invalidos"})
+
+def completetask(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.datecompleted == timezone.now()
+        task.save()
+        return redirect('tasks')
+    
+def deletetask(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')

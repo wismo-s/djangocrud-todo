@@ -8,5 +8,7 @@ urlpatterns = [
     path('logout/', views.singout, name='logout'),
     path('login/', views.lognin, name='lognin'),
     path('tasks/create/', views.createTask, name='createTaks'),
-    path('tasks/<int:task_id>/', views.tasksdetail, name='taksDetail')
+    path('tasks/<int:task_id>/', views.tasksdetail, name='taksDetail'),
+    path('tasks/<int:task_id>/complete', views.completetask, name='taksCompleted'),
+    path('tasks/<int:task_id>/delete', views.deletetask, name='taksDelete')
 ]
