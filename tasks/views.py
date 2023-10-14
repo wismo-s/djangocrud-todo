@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -34,11 +35,12 @@ def singup(request):
         return render(request, 'singup.html', {
             'form': UserCreationForm
         })
-
+@login_required
 def tasks(request):
     taks = Task.objects.filter(user = request.user)
     return render(request, 'tasks.html', { 'tasks':  taks })
 
+@login_required
 def singout(request):
     logout(request)
     return redirect('singup')
@@ -53,7 +55,7 @@ def lognin(request):
 
         login(request, user)
         return redirect('tasks')
-
+@login_required
 def createTask(request):
     if request.method == 'GET':
         return render(request, 'create_taks.html', {
@@ -72,6 +74,8 @@ def createTask(request):
                 'form': TaskForm,
                 'error': "pase un dato correcto"
             })
+            
+@login_required
 def tasksdetail(request, task_id):
     taks = get_object_or_404(Task, pk=task_id, user=request.user)
     form = TaskForm(instance=taks)
@@ -85,15 +89,22 @@ def tasksdetail(request, task_id):
         except ValueError:
             return render(request, 'taks_detail.html', { 'task': taks, 'form': form, 'error': "datos invalidos"})
 
+@login_required
 def completetask(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
-        task.datecompleted == timezone.now()
+        task.datecompleted = timezone.now()
         task.save()
         return redirect('tasks')
-    
+
+@login_required   
 def deletetask(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
         task.delete()
         return redirect('tasks')
+    
+@login_required
+def listcompletetask(request):
+    task = Task.objects.filter(user = request.user, datecompleted__isnull=False)
+    return render(request, 'completetask.html', { 'task': task })

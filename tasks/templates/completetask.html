@@ -1,0 +1,18 @@
+{% extends "layouts/body.html" %}
+{% block content %}
+    <h1>completed task</h1>
+    <ul>
+    {% for taks in task %}
+        <li>
+            {% if taks.important %}
+                <a href="{% url "taksDetail"  taks.id %}"><h1>{{taks.title}}</h1></a>
+            {% else %}
+                <a href="{% url "taksDetail"  taks.id %}"><h3>{{taks.title}}</h3></a>
+            {% endif %}
+            <p>{{taks.description}}</p>
+            <p>{{taks.user}}</p>
+            <p>{{taks.created}}</p>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
